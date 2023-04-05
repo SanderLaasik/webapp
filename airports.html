@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            input, label {
+                display:block;
+            }
+
+            form div {
+                float: left;
+                margin-right: 20px;
+            }
+
+            label {
+                padding-bottom: 10px;
+                font-size: medium;
+                font-weight: bold;
+            }
+
+            input[type=submit] {
+                background-color: hsl(197, 95%, 50%);
+                border: none;
+                color: white;
+                padding: 16px 32px;
+                text-decoration: none;
+                margin: 4px 2px;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Please provide search parameters</h1>
+        <h2>Total airports: {{ . | len }}</h2>
+        <hr>
+
+        <form action="/connections" method="POST">
+            <div>
+                <label for="from">Departure airport:</label>
+                <select id="from" name="from">
+                {{ range . }}
+                    <option value="{{ .Key }}" {{ if eq .Key "LAX"}} selected="selected" {{ end }}>{{ .Name }} ({{ .Key }})</option>
+                {{ end }}
+                </select>
+            </div>
+
+            <div>
+                <label for="to">Arrival airport:</label>
+                <select id="to" name="to">
+                {{ range . }}
+                    <option value="{{ .Key }}" {{ if eq .Key "JFK"}} selected="selected" {{ end }}>{{ .Name }} ({{ .Key }})</option>
+                {{ end }}
+                </select>
+            </div>
+
+            <div>
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" value="2008-01-01">
+            </div>
+            <div>
+                <input type="submit">
+            </div>
+        </form>
+    </body>
+</html>

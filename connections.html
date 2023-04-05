@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            table {
+                border-collapse: collapse;
+                width: 96%;
+                border: 1px solid #ddd;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            th {
+                background-color: #cdebf7;
+            }
+            
+            th, td {
+                text-align: left;
+                padding: 16px;
+            }
+        </style>
+    </head>
+    <body>
+        {{ if not . }}
+            <h1>No connections for these parameters</h1><br>
+            <a href="/search">New search</a>
+        {{ else }}
+            <h1>Best connections:</h1>
+            <hr>
+            {{ range . }}
+            <h2>
+                Total duration: {{ .TotFormatted }}
+            </h2>
+            <table>
+                <tr>
+                    <th>Flight number</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Departure</th>
+                    <th>Arrival</th>
+                    <th>Duration</th>
+                    <th>Tail number</th>
+                    <th>Unique carrier number</th>
+                </tr>
+                {{ range .Flights }}
+                <tr>
+                    <td>{{ .FlightNum }}</td>
+                    <td>{{ .From.Name }} ({{ .From.Key }})</td>
+                    <td>{{ .To.Name }} ({{ .To.Key }})</td>
+                    <td>{{ .DepTimeUTC }}</td>
+                    <td>{{ .ArrTimeUTC }}</td>
+                    <td>{{ .DurFormatted }} </td>
+                    <td>{{ .TailNum }}</td>
+                    <td>{{ .UniqueCarrier }}</td>
+                </tr>
+                {{ end }}
+            </table>
+            <hr>
+            {{ end }}
+        {{ end }}
+    </body>
+</html>
